@@ -3,27 +3,20 @@
 class Solution {
     public int longestSubarray(int[] arr, int k) {
         // code here
-        Map<Integer, Integer> mp = new HashMap<>();
-        int res = 0;
-        int prefSum = 0;
-
-        for (int i = 0; i < arr.length; ++i) {
-            prefSum += arr[i];
-
-			// Check if the entire prefix sums to k
-            if (prefSum == k) 
-                res = i + 1;
-
-            // If prefixSum - k exists in the map then there exist such 
-      		// subarray from (index of previous prefix + 1) to i.
-            else if (mp.containsKey(prefSum - k)) 
-                res = Math.max(res, i - mp.get(prefSum - k));
-
-            // Store only first occurrence index of prefSum
-            if (!mp.containsKey(prefSum))
-                mp.put(prefSum, i);
+        Map<Integer, Integer> map = new HashMap<>();
+        int n = arr.length;
+        int prefix = 0;
+        int maxLen = 0;
+        map.put(0,-1);
+        for(int i = 0; i < n; i++){
+            prefix += arr[i];
+            if(map.containsKey(prefix - k)){
+                maxLen = Math.max(maxLen, i - map.get(prefix-k));
+            }
+            if(!map.containsKey(prefix)){
+                map.put(prefix , i);
+            }
         }
-
-        return res;
+        return maxLen;
     }
 }
