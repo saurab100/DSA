@@ -12,12 +12,12 @@ class Solution {
         //System.out.println(right);
         for(int i = 0; i < n; i++){
             if(i == cand) continue;
-            if(mat[left][i] != 0) return -1;
+            if(mat[cand][i] != 0) return -1;
         }
         for(int i = 0; i < n; i++){
             if(i == cand) continue;
-            if(mat[i][right] != 1) return -1;
+            if(mat[i][cand] != 1) return -1;
         }
-        return left;
+        return cand;
     }
 }
