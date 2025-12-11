@@ -2,23 +2,21 @@
 
 class Solution {
     public int rowWithMax1s(int arr[][]) {
-        // code here
-        int maxOne = 0;
+    
         int rows = arr.length;
         int cols = arr[0].length;
-        int result = -1;
+        int right = cols-1;
+        int left = 0;
         
-        for(int i = 0; i < rows; i++){
-            int count = 0;
-            for(int j = 0; j < cols; j++){
-                if(arr[i][j] == 1) count++;
+        int maxRow = -1;
+        
+        while(left < rows && right >= 0){
+            if(arr[left][right] == 1){
+                right--;
+                maxRow = left;
             }
-            if(count > maxOne){
-                result = i;
-                maxOne = count;
-            }
-            //maxOne = Math.max(maxOne, count);
+            else left++;
         }
-        return result;
+        return maxRow;
     }
 }
