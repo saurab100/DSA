@@ -1,58 +1,53 @@
 class Solution {
     public ArrayList<String> ratInMaze(int[][] maze) {
-        StringBuilder str = new StringBuilder();
+        // code here
+        ArrayList<String> output = new ArrayList<>();
         int n = maze.length;
-        
         boolean[][] visited = new boolean[n][n];
-        ArrayList<String> list = new ArrayList<>();
-        if (maze[0][0] == 0) return list;
-        helper(maze, 0, 0, n, visited, str, list);
-        return list;
+        StringBuilder str = new StringBuilder();
+        helper(maze, 0, 0, output, visited, n, str);
+        return output;
+        
     }
     
-    public void helper(int[][] maze, int r, int c, int n,
-                       boolean[][] visited,
-                       StringBuilder str,
-                       ArrayList<String> list) {
-
-        // Base case: destination
-        if (r == n - 1 && c == n - 1) {
-            list.add(str.toString());
+    public void helper(int[][] maze, int row, int col, ArrayList<String> output, boolean[][] visited, int n, StringBuilder str){
+        if(row == n-1 && col == n-1){
+            output.add(str.toString());
             return;
         }
-
-        visited[r][c] = true;
-
-        // Down
-        if (r + 1 < n && maze[r + 1][c] == 1 && !visited[r + 1][c]) {
-            str.append('D');
-            helper(maze, r + 1, c, n, visited, str, list);
-            str.deleteCharAt(str.length() - 1);
+        if(col > n-1 || row < 0 || row >= n || col < 0 || maze[row][col] == 0 || visited[row][col] == true) return;
+        visited[row][col] = true;
+        
+        
+        
+         //DOWN
+        if(row+1 < n && maze[row+1][col] == 1 && !visited[row+1][col]){
+            str.append("D");
+            helper(maze, row+1, col, output, visited, n, str);
+            str.deleteCharAt(str.length()-1);
         }
         
-         // Left
-        if (c - 1 >= 0 && maze[r][c - 1] == 1 && !visited[r][c - 1]) {
-            str.append('L');
-            helper(maze, r, c - 1, n, visited, str, list);
-            str.deleteCharAt(str.length() - 1);
-        }
-
-       
-        // Right
-        if (c + 1 < n && maze[r][c + 1] == 1 && !visited[r][c + 1]) {
-            str.append('R');
-            helper(maze, r, c + 1, n, visited, str, list);
-            str.deleteCharAt(str.length() - 1);
+         //LEFT
+        if(col-1 >= 0 && maze[row][col-1] == 1 && !visited[row][col-1]){
+            str.append("L");
+            helper(maze, row, col-1, output, visited, n, str);
+            str.deleteCharAt(str.length()-1);
         }
         
-         // Up
-        if (r - 1 >= 0 && maze[r - 1][c] == 1 && !visited[r - 1][c]) {
-            str.append('U');
-            helper(maze, r - 1, c, n, visited, str, list);
-            str.deleteCharAt(str.length() - 1);
+         //RIGHT
+        if(col+1 < n && maze[row][col+1] == 1 && !visited[row][col+1]){
+            str.append("R");
+            helper(maze, row, col+1, output, visited, n, str);
+            str.deleteCharAt(str.length()-1);
         }
-
-        // Backtrack
-        visited[r][c] = false;
+        
+        //UP
+        if(row-1 >= 0 && maze[row-1][col] == 1 && !visited[row-1][col]){
+            str.append("U");
+            helper(maze, row-1, col, output, visited, n, str);
+            str.deleteCharAt(str.length()-1);
+        }
+        
+        visited[row][col] = false;
     }
 }
