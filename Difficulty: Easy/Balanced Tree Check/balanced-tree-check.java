@@ -1,37 +1,31 @@
-/* A binary tree node class
-class Node
-{
+/*
+class Node {
     int data;
-    Node left,right;
+    Node left, right;
 
     Node(int d)
     {
         data = d;
         left = right = null;
     }
-} */
+}
+*/
 
 class Solution {
     public boolean isBalanced(Node root) {
-        if(root == null){
-            return true;
-        }
-       
-        int left = height(root.left);
-        int right = height(root.right); 
-        if (Math.abs(left - right) > 1){
-            return false;
-        }
-        return isBalanced(root.left) && isBalanced(root.right);
         
+        int result = height(root);
+        if(result == -1) return false;
+        else return true;
     }
     
-    public static int height(Node root){
-        if(root == null){
-            return 0;
-        }
+    public int height(Node root){
+        if(root == null) return 0;
         int left = height(root.left);
+        if(left == -1) return -1;
         int right = height(root.right);
-        return 1 + Math.max(left, right);
+        if(right == -1) return -1;
+        if(Math.abs(left-right) > 1) return -1;
+        else return 1 + Math.max(left, right);
     }
 }
