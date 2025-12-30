@@ -4,22 +4,23 @@ class Solution {
     public int maxMeetings(int start[], int end[]) {
         // add your code here
         int n = start.length;
-        if(n==0) return 0;
-        int count = 1;
         int[][] arr = new int[n][2];
-        for(int i = 0; i<n; i++){
+        for(int i = 0; i < n; i++){
             arr[i][0] = start[i];
             arr[i][1] = end[i];
         }
-        Arrays.sort(arr, (a, b) -> a[1]-b[1]);
-        int lastEnd = arr[0][1];
-        //System.out.println(Arrays.deepToString(arr));
-        for(int i = 1; i < n; i++){
-            if(arr[i][0] > lastEnd){
-              count++;
-              lastEnd = arr[i][1];
-            } 
+        int count = 1;
+        int i = 0;
+        Arrays.sort(arr, (a,b) -> Integer.compare(a[1], b[1]));
+        for(int j = 1; j < n; j++){
+            if(arr[i][1] >= arr[j][0]) continue;
+            else{
+                count++;
+                i = j;
+            }
         }
+        //if(count == 1) return 0;
         return count;
+        
     }
 }
