@@ -1,19 +1,18 @@
 class Solution {
     public ArrayList<Integer> nextLargerElement(int[] arr) {
         // code here
-    int n = arr.length;
-    int[] ans = new int[n];
-    Arrays.fill(ans,-1);
-    Deque<Integer> st = new ArrayDeque<>();
-    for(int i = n-1; i >= 0; i--){
-        while(!st.isEmpty() && arr[st.peekFirst()] <= arr[i]){
-            st.pollFirst();
+        Stack<Integer> st = new Stack<>();
+        int n = arr.length;
+        int[] ans = new int[n];
+        ArrayList<Integer> list =  new ArrayList<Integer>();
+        
+        for(int i = n-1; i >= 0; i--){
+            while(!st.isEmpty() && arr[i] >= arr[st.peek()]) st.pop();
+            if(st.isEmpty()) ans[i] = -1;
+            else ans[i] = arr[st.peek()];
+            st.push(i);
         }
-        if(!st.isEmpty()) ans[i] = arr[st.peekFirst()];
-        st.push(i);
-    }
-    ArrayList<Integer> list = new ArrayList<>();
-    for(int num : ans) list.add(num);
-    return list;
+        for(int i : ans) list.add(i);
+        return list;
     }
 }
