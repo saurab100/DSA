@@ -1,14 +1,14 @@
 class Solution {
-    // Function to remove duplicates from the given array
-    public int removeDuplicates(int[] arr) {
-        int i = 0;
+    ArrayList<Integer> removeDuplicates(int[] arr) {
+        // code here
         int n = arr.length;
-        for(int j = 1; j < n; j++){
-            if(arr[i] != arr[j]){
-                i++;
-                arr[i] = arr[j];
-            }
+        int i = 0;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        while(i < n){
+            while(i+1 < n && arr[i] == arr[i+1]) i++;
+            list.add(arr[i]);
+            i++;
         }
-        return i+1;
+        return list;
     }
 }
