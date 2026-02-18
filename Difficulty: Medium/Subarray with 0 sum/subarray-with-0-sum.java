@@ -4,27 +4,17 @@ class Solution {
         // Your code here
         int n = arr.length;
         int[] prefix = new int[n];
-        Map<Integer, Integer> map = new HashMap<>();
-        for(int i = 0; i < n; i++){
-            if(arr[i] == 0){
-                return true;
-            }
-            
-        }
         prefix[0] = arr[0];
-        for(int i = 1; i < n; i++){
-            prefix[i] = prefix[i-1] + arr[i];
-            if(prefix[i] == 0){
-                return true;
-            }
-        }
+        for(int i = 1; i < n; i++) prefix[i] = prefix[i-1] + arr[i];
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+        int count = 0;
         for(int i = 0; i < n; i++){
             if(map.containsKey(prefix[i])){
                 return true;
             }
-            else{
-                map.put(prefix[i], i);
-            }
+            else if(!map.containsKey(prefix[i])) map.put(prefix[i], 1);
+            //else map.put(prefix[i], map.get(prefix[i])+1);
         }
         return false;
     }
