@@ -14,18 +14,18 @@ class Node {
 class Solution {
     public ArrayList<Integer> leftView(Node root) {
         // code here
+        Queue<Node> q = new ArrayDeque<>();
+        if(root == null) return new ArrayList<>();
+        q.offer(root);
         ArrayList<Integer> list = new ArrayList<Integer>();
-        Queue<Node> q = new LinkedList<>();
-        if(root == null) return list;
-        q.add(root);
-        
         while(!q.isEmpty()){
+            
             int size = q.size();
-            for(int i = 0; i  < size; i++){
+            for(int i = 0; i < size; i++){
                 Node node = q.poll();
                 if(i == 0) list.add(node.data);
-                if(node.left != null) q.add(node.left);
-                if(node.right != null) q.add(node.right);
+                if(node.left != null) q.offer(node.left);
+                if(node.right != null) q.offer(node.right);
             }
         }
         return list;
