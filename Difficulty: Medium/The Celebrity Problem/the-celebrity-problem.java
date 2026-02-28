@@ -1,23 +1,27 @@
 class Solution {
     public int celebrity(int mat[][]) {
-        
-        int n = mat.length;
+        int x = 0;
+        int j = mat.length - 1;
         int candidate = 0;
+        while(x < j){
+            if(knows(x, j, mat)) x++;
+            else if(!knows(x, j, mat)) j--;
+        }
+        candidate = x;
         
-        for(int i = 1; i < n; i++){
-            if(knows(mat, candidate, i)) candidate = i;
+        for(int i = 0; i < mat[0].length; i++){
+            if( i != candidate && mat[candidate][i] != 0) return -1;
         }
         
-        for(int i = 0; i < n; i++){
-            if(candidate != i && mat[candidate][i] != 0) return -1;
-            else if(candidate != i && mat[i][candidate] != 1) return -1;
+        for(int i = 0; i < mat.length; i++){
+            if( i != candidate && mat[i][candidate] != 1) return -1;
         }
         return candidate;
         
     }
     
-    boolean knows(int mat[][], int a, int b){
-        if(mat[a][b] == 1) return true;
-        else return false;
+    public boolean knows(int a, int b, int mat[][]){
+        if(mat[a][b] != 1) return false;
+        else return true;
     }
 }
