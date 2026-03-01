@@ -1,31 +1,20 @@
-// User function Template for Java
-
 class Solution {
-    static int knapSack(int val[], int wt[], int capacity) {
-        int n = val.length;
-        int[][] dp = new int[capacity+1][n+1];
-        for(int i = 0; i <= capacity; i++){
-            for(int j = 0; j <= n; j++){
-                dp[i][j] = -1;
-            }
-        }
-        return helper(val, wt, capacity, n, dp);
+    int[][] dp;
+    public int knapSack(int val[], int wt[], int W) {
+        // code here
+     int n = val.length;
+        dp = new int[n+1][W+1];
+        for(int[] arr : dp) Arrays.fill(arr, -1);
+        return helper(W, val, wt, n);
     }
     
-    static int helper(int val[], int wt[], int capacity, int n, int[][] dp){
-        if(capacity == 0 || n == 0){
-            return 0;
+    public int helper(int W, int val[], int wt[], int n){
+        if(n == 0 || W == 0) return 0;
+        if(dp[n][W] != -1) return dp[n][W];
+        if(wt[n-1] <= W){
+            dp[n][W] = Math.max(val[n-1] + helper(W - wt[n-1], val, wt, n), helper(W, val, wt, n-1));
         }
-        if(dp[capacity][n] != -1){
-            return dp[capacity][n];
-        }
-        if(wt[n-1] <= capacity){
-            dp[capacity][n] =  Math.max((val[n-1] + helper(val, wt, capacity - wt[n-1], n, dp)),
-            helper(val, wt, capacity, n-1, dp));
-        }
-        else{
-            dp[capacity][n] = helper(val, wt, capacity, n-1, dp);
-        }
-        return dp[capacity][n];
+        else dp[n][W] = helper(W, val, wt, n-1);
+        return dp[n][W];
     }
 }
